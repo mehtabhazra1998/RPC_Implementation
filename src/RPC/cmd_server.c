@@ -1,7 +1,6 @@
 #include "cmd.h"
 
-char **
-execute_cmd_1_svc(command *argp, struct svc_req *rqstp)
+char ** execute_cmd_1_svc(command *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
