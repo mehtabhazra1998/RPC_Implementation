@@ -2,7 +2,13 @@
 
 #include "cmd.h"
 #include "stdio.h"
-
+#include "string.h"
+#include<stdio.h> 
+#include<string.h> 
+#include<stdlib.h> 
+#include<unistd.h> 
+#include<sys/types.h> 
+#include<sys/wait.h> 
 
 #define MAX_CMD_LENGTH 50
 
@@ -27,7 +33,7 @@ void cmd_prog_1(char *host, char *cmd)
 	}
 	else
 	{
-		printf("%s", *result_1);
+		printf("%s\n", *result_1);
 	}
 	
 #ifndef	DEBUG
@@ -40,7 +46,7 @@ int main(int argc, char *argv[])
 {
 	char *host;
 	char cmd[MAX_CMD_LENGTH];
-
+	char* username = getenv("USER"); 
 	if (argc < 2) {
 		printf ("usage: %s server_host\n", argv[0]);
 		exit (1);
@@ -49,7 +55,15 @@ int main(int argc, char *argv[])
 
 	while (1){
 
+		printf(">>>");
 		fgets(cmd, MAX_CMD_LENGTH - 1, stdin);
+		//printf("%s",cmd);
+		
+		if(strcmp(cmd,"exit\n")==0)
+		{
+			printf("GoodBye %s!!!\n",username);
+			break;
+		}	
 		cmd_prog_1(host, cmd);
 	}
 	

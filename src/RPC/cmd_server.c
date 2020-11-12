@@ -1,13 +1,37 @@
 #include "cmd.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <limits.h>
+#include <string.h>
 
 char ** execute_cmd_1_svc(command *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
-	char cmd[50];
-	strcpy(cmd, argp->cmd);
-	system(cmd);
-
-	result = "done";
+	char cmdd[50];
+	strcpy(cmdd, argp->cmd);
+	//system(cmd);
+	FILE *cmd=popen(cmdd,"r");
+    	char mid_result[24];
+    	char rs[1000];
+    	rs[0]='\0';
+	char cwd[PATH_MAX];
+	if (getcwd(cwd, sizeof(cwd)) != NULL) {
+       		//printf("Current working dir: %s\n", cwd);
+		strcat(rs,cwd);
+		strcat(rs,"\n");
+		strcat(cwd,"\n");
+   	}
+	printf("Hi, received your request to execute command!!!\n");
+    	//system(cmdd);
+	while (fgets(mid_result, sizeof(mid_result), cmd) !=NULL)
+                 strcat(rs,mid_result);
+    	//printf("%s",rs);
+	if(strcmp(rs,cwd)==0)
+	{
+		strcat(rs,"Sorry can't display results for this one. Either the desired command has been executed if it exists , else no such command exists in my vocabulary.");
+	}
+    	pclose(cmd);
+    	result = rs;
 	return &result;
 }
