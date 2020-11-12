@@ -9,8 +9,8 @@
  
 void error(char *msg)
 {
-perror(msg);
-exit(0);
+	perror(msg);
+	exit(0);
 }
 
 int main(int argc, char const *argv[]) 
