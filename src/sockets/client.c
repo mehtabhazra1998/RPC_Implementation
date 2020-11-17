@@ -5,6 +5,8 @@
 #include <unistd.h> 
 #include <string.h> 
 #include <stdlib.h>
+
+#define MAX_CMD_LENGTH 50
 #define PORT 8080 
  
 void error(char *msg)
@@ -20,17 +22,21 @@ int main(int argc, char const *argv[])
 	// char *hello = "Hello from client";
 	char hello[50]; 
 	char buffer[1024] = {0}; 
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
-	{ 
-		printf("\n Socket creation error \n"); 
-		return -1; 
-	} 
+	char *host;
+	char cmd[MAX_CMD_LENGTH];
+	char* username = getenv("USER"); 
+	while(1){	
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+        {
+                printf("\n Socket creation error \n");
+                return -1;
+        }
 
-	serv_addr.sin_family = AF_INET; 
-	serv_addr.sin_port = htons(PORT); 
-	
+        serv_addr.sin_family = AF_INET;
+        serv_addr.sin_port = htons(PORT);
 	printf("Please enter a command you want to run remotely.\n");
 	// scanf("%s",hello);
+	printf(">>>");
 	fgets(hello, sizeof(hello), stdin);
 	// Convert IPv4 and IPv6 addresses from text to binary form 
 	if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0) 
@@ -49,13 +55,19 @@ int main(int argc, char const *argv[])
 	{
 		perror("Error sending the RPC to the Remote machine!!!!!");
 	} 
-	printf("Hello message sent\n"); 
+	//aprintf("Hello message sent\n"); 
+	if(strcmp(hello,"exit\n")==0)
+		{
+			printf("GoodBye %s!!!\n",username);
+			break;
+		}
 	valread = read( sock , buffer, 1024); 
 	if(valread<0)
 	{
 		perror("Error receiving response from the Remote Machine!!!!!");
 	}
 	printf("%s\n",buffer ); 
+	}
 	return 0; 
 } 
 
