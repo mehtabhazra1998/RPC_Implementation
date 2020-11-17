@@ -16,6 +16,7 @@ static void cmd_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	union {
 		command execute_cmd_1_arg;
 	} argument;
+	
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
 	char *(*local)(char *, struct svc_req *);
