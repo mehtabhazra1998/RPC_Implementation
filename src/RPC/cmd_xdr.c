@@ -5,8 +5,7 @@
 
 #include "cmd.h"
 
-bool_t
-xdr_command (XDR *xdrs, command *objp)
+bool_t xdr_command (XDR *xdrs, command *objp)
 {
 	register int32_t *buf;
 
