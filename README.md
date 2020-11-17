@@ -38,6 +38,23 @@ Remote Procedure Calls for Operating systems and Algorithms course
    ./cmd_client <host> # replace <host> with localhost to check within the same pc
    ```
 
+# Remote Procedure Calls Using Sockets
+
+##Open atleast two terminals for one server and multiple clients .
+### Running the code
+#### For server:-
+ ```bash
+ 1. cd src/sockets/
+ 2. gcc server.c -o server
+ 3. ./server
+ ```
+
+#### For client:-
+ ```bash
+ 1. cd src/sockets/
+ 2. gcc client.c -o client 
+ 3. ./client
+ ```
    
 
 ### Contributors
